@@ -134,7 +134,7 @@ function Index() {
 
         <footer className="text-center text-[10px] text-muted-foreground">
           <p>© {new Date().getFullYear()} VTMA CoreTrust Advisory Ltd. All rights reserved.</p>
-          <p className="mt-0.5 opacity-70">Powered by Digital Hub</p>
+          <p className="mt-0.5 opacity-70">Powered by VTMA Engineering Lab</p>
         </footer>
       </main>
     </div>
