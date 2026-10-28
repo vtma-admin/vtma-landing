@@ -166,9 +166,9 @@ function Index() {
               </>
             );
             return it.onClick ? (
-              <button key={it.label[lang]} type="button" onClick={it.onClick} className={cls}>{body}</button>
+              <button key={it.label.en} type="button" onClick={it.onClick} className={cls}>{body}</button>
             ) : (
-              <a key={it.label[lang]} href={it.href} target={it.href?.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className={cls}>{body}</a>
+              <a key={it.label.en} href={it.href} target={it.href?.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className={cls}>{body}</a>
             );
           })}
         </nav>
