@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import {
   Globe,
   MapPin,
@@ -29,7 +30,7 @@ export const Route = createFileRoute("/")({
         name: "description",
         content: "Connect with VTMA CoreTrust Advisory Ltd: audit & assurance, forensics, financial advisory and capacity building.",
       },
-      { property: "og:title", content: "VTMA CoreTrust Advisory Ltd — Audit, Forensics & Advisory" },
+      { property: "og:title", content: "VTMA CoreTrust Advisory Ltd - Audit, Forensics & Advisory" },
       {
         property: "og:description",
         content: "Audit & Assurance • Forensics • Financial Advisory • Capacity Building. Website, contact and consultations in one place.",
@@ -77,6 +78,30 @@ const items: Item[] = [
   { label: { en: "Save Contact", fr: "Enregistrer le contact" }, sub: { en: "Download vCard (.vcf)", fr: "Télécharger la vCard (.vcf)" }, icon: UserPlus, onClick: downloadVCard },
 ];
 
+// Platform-specific hint shown after the vCard is generated. Browsers can't
+// open the contacts app directly, so tell the user what just happened.
+const SAVE_HINT = {
+  ios: {
+    en: "Contact card opened: tap “Add to Contacts” to save it.",
+    fr: "Fiche contact ouverte : touchez « Ajouter aux contacts » pour l'enregistrer.",
+  },
+  android: {
+    en: "Contact downloaded: tap the download notification to add it to your contacts.",
+    fr: "Contact téléchargé : touchez la notification de téléchargement pour l'enregistrer.",
+  },
+  other: {
+    en: "Contact card downloaded. Open it to save the contact.",
+    fr: "Fiche contact téléchargée. Ouvrez-la pour enregistrer le contact.",
+  },
+} as const;
+
+function platformKind(): keyof typeof SAVE_HINT {
+  const ua = navigator.userAgent;
+  if (/android/i.test(ua)) return "android";
+  if (/iphone|ipad|ipod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) return "ios";
+  return "other";
+}
+
 const TXT = {
   services: {
     en: ["Audit & Assurance", "Forensics", "Financial Advisory", "Capacity Building"],
@@ -100,6 +125,11 @@ function Index() {
   const choose = (l: Lang) => {
     setLang(l);
     localStorage.setItem("lang", l);
+  };
+  const handleItemClick = (it: Item) => {
+    if (!it.onClick) return;
+    it.onClick();
+    toast.success(SAVE_HINT[platformKind()][lang]);
   };
   return (
     <div className="relative min-h-dvh overflow-hidden bg-background text-foreground">
@@ -165,7 +195,7 @@ function Index() {
               </>
             );
             return it.onClick ? (
-              <button key={it.label.en} type="button" onClick={it.onClick} className={cls}>{body}</button>
+              <button key={it.label.en} type="button" onClick={() => handleItemClick(it)} className={cls}>{body}</button>
             ) : (
               <a key={it.label.en} href={it.href} target={it.href?.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className={cls}>{body}</a>
             );
