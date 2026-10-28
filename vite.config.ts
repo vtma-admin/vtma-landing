@@ -16,11 +16,20 @@ export default defineConfig({
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
-    // Prerender the single route to static HTML at build time so the site can
-    // be hosted on GitHub Pages (no server runtime).
+    // Prerender the routes to static HTML at build time so the site can be
+    // hosted on GitHub Pages (no server runtime). The 404 page is written to
+    // 404.html at the site root, which GitHub Pages serves for unknown URLs.
     prerender: {
       enabled: true,
       crawlLinks: false,
     },
+    pages: [
+      {
+        path: "/404",
+        // autoSubfolderIndex off writes the file as /404.html, which GitHub
+        // Pages serves for unknown URLs.
+        prerender: { enabled: true, autoSubfolderIndex: false },
+      },
+    ],
   },
 });
