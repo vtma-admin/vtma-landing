@@ -59,20 +59,23 @@ npm run dev
 
 ## Deployment (GitHub Pages)
 
-This site is a static single page, built in SPA mode and prerendered to HTML at build time. It deploys to GitHub Pages via the [Deploy to GitHub Pages](.github/workflows/deploy.yml) workflow.
+This site is a static single page, prerendered to HTML at build time. It deploys to GitHub Pages via the [Deploy to GitHub Pages](.github/workflows/deploy.yml) workflow.
 
 **Setup (once):**
 
 1. Push this repository to GitHub.
 2. In the repo, go to **Settings → Pages** and set **Source** to **GitHub Actions**.
+3. Custom domain: in **Settings → Pages**, enter `landing.vtmacoretrust.com` under **Custom domain** and save. At your DNS provider, add a `CNAME` record:
+   - `landing` → `vtma-admin.github.io`
+   - (a plain `CNAME` is enough for subdomains; no `A` records needed)
 
-After that, every push to `main` builds and publishes the site automatically.
+The `public/CNAME` file ships with the deploy so the setting survives rebuilds. Wait for the DNS check to go green, and enable **Enforce HTTPS** once the certificate is issued.
 
-**URL:** the site is served from the repository subpath, so `vite.config.ts` sets `base: "/vtma-landing/"`. If you rename the repository or switch to a custom domain (`base: "/"` and a `CNAME` file), update the base accordingly.
+**URL:** the site is served from the root of a custom subdomain, so `vite.config.ts` uses `base: "/"`. If you ever switch back to the default `https://vtma-admin.github.io/vtma-landing/` URL, change the base to `"/vtma-landing/"` instead.
 
 **Local preview of the production build:**
 
 ```sh
 npm run build
-npx vite preview   # serves at http://localhost:4173/vtma-landing/
+npx vite preview   # serves at http://localhost:4173/
 ```

@@ -8,8 +8,9 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   vite: {
-    // GitHub Pages serves project sites from /<repo>/ — keep asset URLs relative to that base.
-    base: "/vtma-landing/",
+    // Served from a custom subdomain (landing.vtmacoretrust.com) via GitHub
+    // Pages, so the site lives at the root path.
+    base: "/",
   },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
