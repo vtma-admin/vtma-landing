@@ -131,7 +131,7 @@ function Index() {
             <img src={logo.url} alt="VTMA CoreTrust Advisory Ltd logo" className="mx-auto h-10 w-auto" />
           </div>
           <h1 className="mt-4 text-lg font-semibold leading-tight tracking-tight">VTMA CoreTrust Advisory Ltd</h1>
-          <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{TXT.services[lang].map((x, i) => (
+          <p className="mt-1.5 flex flex-wrap justify-center text-[11px] leading-relaxed text-muted-foreground">{TXT.services[lang].map((x, i) => (
               <span key={x} className="whitespace-nowrap">
                 {i > 0 && <span className="mx-1.5 text-gold/70">•</span>}
                 {x}
