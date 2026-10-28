@@ -82,41 +82,46 @@ const items: Item[] = [
 
 function Index() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(ellipse_at_top,var(--glow),transparent_70%)]" />
-      <main className="relative mx-auto flex w-full max-w-md flex-col px-5 pb-10 pt-12">
+    <div className="relative min-h-dvh overflow-hidden bg-background text-foreground">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[360px] bg-[radial-gradient(ellipse_at_top,var(--glow),transparent_70%)]" />
+      <main className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col justify-between gap-4 px-4 py-5">
         <header className="flex flex-col items-center text-center">
-          <div className="w-full rounded-2xl bg-card px-8 py-6 shadow-[var(--shadow-card)]">
-            <img src={logo.url} alt="VTMA CoreTrust Advisory Ltd logo" className="mx-auto h-14 w-auto" />
+          <div className="w-full rounded-2xl bg-card px-6 py-3.5 shadow-[var(--shadow-card)]">
+            <img src={logo.url} alt="VTMA CoreTrust Advisory Ltd logo" className="mx-auto h-10 w-auto" />
           </div>
-          <h1 className="mt-7 text-2xl font-semibold tracking-tight">VTMA CoreTrust Advisory Ltd</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Audit Analytics, Compliance &amp; Reporting Systems</p>
-          <div className="mt-5 flex items-center gap-3 text-gold">
-            <span className="h-px w-8 bg-gold/50" />
-            <Landmark className="h-4 w-4" strokeWidth={1.5} />
-            <span className="text-[10px] font-medium uppercase tracking-[0.32em]">Trusted Advisory</span>
-            <span className="h-px w-8 bg-gold/50" />
+          <h1 className="mt-4 text-lg font-semibold leading-tight tracking-tight">VTMA CoreTrust Advisory Ltd</h1>
+          <p className="mt-1 text-xs text-muted-foreground">Audit Analytics, Compliance &amp; Reporting Systems</p>
+          <div className="mt-3 flex items-center gap-2.5 text-gold">
+            <span className="h-px w-6 bg-gold/50" />
+            <Landmark className="h-3.5 w-3.5" strokeWidth={1.5} />
+            <span className="text-[9px] font-medium uppercase tracking-[0.3em]">Trusted Advisory</span>
+            <span className="h-px w-6 bg-gold/50" />
           </div>
         </header>
 
-        <nav className="mt-9 flex flex-col gap-3">
-          {items.map((it) => {
+        <nav className="grid grid-cols-2 gap-2">
+          {items.map((it, i) => {
             const Icon = it.icon;
-            const cls = `group flex w-full items-center gap-4 rounded-2xl border px-4 py-3.5 text-left transition-all duration-200 active:scale-[0.98] hover:-translate-y-0.5 ${
+            const full = i === 0 || i === items.length - 1;
+            const cls = `group flex min-w-0 items-center gap-2.5 rounded-xl border px-3 py-2.5 text-left transition-all duration-200 active:scale-[0.97] hover:-translate-y-0.5 ${
+              full ? "col-span-2" : ""
+            } ${
               it.primary
                 ? "border-transparent bg-primary text-primary-foreground shadow-[var(--shadow-glow)]"
                 : "border-border bg-secondary text-secondary-foreground hover:border-primary/60 hover:bg-accent"
             }`;
             const body = (
               <>
-                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${it.primary ? "bg-primary-foreground/15" : "bg-primary/15 text-primary"}`}>
-                  <Icon className="h-5 w-5" />
+                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${it.primary ? "bg-primary-foreground/15" : "bg-primary/15 text-primary"}`}>
+                  <Icon className="h-4 w-4" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-[15px] font-semibold">{it.label}</span>
-                  <span className={`block truncate text-xs ${it.primary ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{it.sub}</span>
+                  <span className="block truncate text-[13px] font-semibold leading-tight">{it.label}</span>
+                  {full && (
+                    <span className={`block truncate text-[11px] ${it.primary ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{it.sub}</span>
+                  )}
                 </span>
-                <ChevronRight className="h-4 w-4 shrink-0 opacity-50 transition-transform group-hover:translate-x-1" />
+                {full && <ChevronRight className="h-4 w-4 shrink-0 opacity-50 transition-transform group-hover:translate-x-1" />}
               </>
             );
             return it.onClick ? (
@@ -127,10 +132,9 @@ function Index() {
           })}
         </nav>
 
-        <footer className="mt-12 text-center text-xs text-muted-foreground">
-          <div className="mx-auto mb-4 h-px w-16 bg-gold/40" />
+        <footer className="text-center text-[10px] text-muted-foreground">
           <p>© {new Date().getFullYear()} VTMA CoreTrust Advisory Ltd. All rights reserved.</p>
-          <p className="mt-1 opacity-70">Powered by Digital Hub</p>
+          <p className="mt-0.5 opacity-70">Powered by Digital Hub</p>
         </footer>
       </main>
     </div>
