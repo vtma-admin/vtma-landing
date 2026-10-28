@@ -9,7 +9,7 @@ import {
   CalendarCheck,
   UserPlus,
   ChevronRight,
-  ShieldCheck,
+  Landmark,
 } from "lucide-react";
 import logo from "@/assets/vtma-logo.png.asset.json";
 
@@ -27,12 +27,12 @@ const CONTACT = {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "VTMA Coretrust — Audit, Compliance & Reporting" },
+      { title: "VTMA CoreTrust Advisory Ltd — Audit, Compliance & Reporting" },
       {
         name: "description",
-        content: "Connect with VTMA Coretrust: audit analytics, compliance and reporting systems advisory.",
+        content: "Connect with VTMA CoreTrust Advisory Ltd: audit analytics, compliance and reporting systems advisory.",
       },
-      { property: "og:title", content: "VTMA Coretrust — Audit, Compliance & Reporting" },
+      { property: "og:title", content: "VTMA CoreTrust Advisory Ltd — Audit, Compliance & Reporting" },
       {
         property: "og:description",
         content: "Audit Analytics, Compliance & Reporting Systems. Website, contact and consultations in one place.",
@@ -48,8 +48,8 @@ function downloadVCard() {
   const vcf = [
     "BEGIN:VCARD",
     "VERSION:3.0",
-    "FN:VTMA Coretrust",
-    "ORG:VTMA Coretrust",
+    "FN:VTMA CoreTrust Advisory Ltd",
+    "ORG:VTMA CoreTrust Advisory Ltd",
     "TITLE:Audit Analytics, Compliance & Reporting Systems",
     `TEL;TYPE=WORK,VOICE:${CONTACT.phone}`,
     `EMAIL;TYPE=WORK:${CONTACT.email}`,
@@ -60,7 +60,7 @@ function downloadVCard() {
   const url = URL.createObjectURL(new Blob([vcf], { type: "text/vcard;charset=utf-8" }));
   const a = document.createElement("a");
   a.href = url;
-  a.download = "VTMA-Coretrust.vcf";
+  a.download = "VTMA-CoreTrust-Advisory.vcf";
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -87,12 +87,15 @@ function Index() {
       <main className="relative mx-auto flex w-full max-w-md flex-col px-5 pb-10 pt-12">
         <header className="flex flex-col items-center text-center">
           <div className="w-full rounded-2xl bg-card px-8 py-6 shadow-[var(--shadow-card)]">
-            <img src={logo.url} alt="VTMA Coretrust logo" className="mx-auto h-14 w-auto" />
+            <img src={logo.url} alt="VTMA CoreTrust Advisory Ltd logo" className="mx-auto h-14 w-auto" />
           </div>
-          <h1 className="mt-7 text-2xl font-semibold tracking-tight">VTMA Coretrust</h1>
+          <h1 className="mt-7 text-2xl font-semibold tracking-tight">VTMA CoreTrust Advisory Ltd</h1>
           <p className="mt-2 text-sm text-muted-foreground">Audit Analytics, Compliance &amp; Reporting Systems</p>
-          <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-gold/30 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-gold">
-            <ShieldCheck className="h-3.5 w-3.5" /> Trusted Advisory
+          <div className="mt-5 flex items-center gap-3 text-gold">
+            <span className="h-px w-8 bg-gold/50" />
+            <Landmark className="h-4 w-4" strokeWidth={1.5} />
+            <span className="text-[10px] font-medium uppercase tracking-[0.32em]">Trusted Advisory</span>
+            <span className="h-px w-8 bg-gold/50" />
           </div>
         </header>
 
@@ -126,7 +129,7 @@ function Index() {
 
         <footer className="mt-12 text-center text-xs text-muted-foreground">
           <div className="mx-auto mb-4 h-px w-16 bg-gold/40" />
-          <p>© {new Date().getFullYear()} VTMA Coretrust. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} VTMA CoreTrust Advisory Ltd. All rights reserved.</p>
           <p className="mt-1 opacity-70">Powered by Digital Hub</p>
         </footer>
       </main>
