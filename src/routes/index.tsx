@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import {
   Globe,
   MapPin,
-  Linkedin,
-  Facebook,
   Mail,
   MessageCircle,
   CalendarCheck,
@@ -12,23 +10,21 @@ import {
   ChevronRight,
   Landmark,
 } from "lucide-react";
-import logo from "@/assets/vtma-logo.png.asset.json";
+import logoUrl from "@/assets/vtma-logo.png";
 
-// Contact details — replace with real values.
+// Contact details.
 const CONTACT = {
   website: "https://vtmacoretrust.com",
-  address: "VTMA Coretrust Office",
-  linkedin: "https://www.linkedin.com/company/vtmacoretrust",
-  facebook: "https://www.facebook.com/vtmacoretrust",
-  email: "info@vtmacoretrust.com",
-  phone: "+10000000000",
-  booking: "https://vtmacoretrust.com/contact",
+  address: "77 Rue 1123 Hydrocarbures, Bonapriso, Douala, Cameroon",
+  email: "contact@vtmacoretrust.com",
+  phone: "+237 6 40 90 12 52",
+  booking: "https://calendar.app.google/K4r5SiGGDsdwf4pbA",
 };
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "VTMA CoreTrust Advisory Ltd — Audit, Forensics & Advisory" },
+      { title: "VTMA CoreTrust Advisory Ltd - Audit, Forensics & Advisory" },
       {
         name: "description",
         content: "Connect with VTMA CoreTrust Advisory Ltd: audit & assurance, forensics, financial advisory and capacity building.",
@@ -55,7 +51,7 @@ function downloadVCard() {
     `TEL;TYPE=WORK,VOICE:${CONTACT.phone}`,
     `EMAIL;TYPE=WORK:${CONTACT.email}`,
     `URL:${CONTACT.website}`,
-    `ADR;TYPE=WORK:;;${CONTACT.address};;;;`,
+    `ADR;TYPE=WORK:;;77 Rue 1123 Hydrocarbures;Bonapriso, Douala;;Cameroon`,
     "END:VCARD",
   ].join("\r\n");
   const url = URL.createObjectURL(new Blob([vcf], { type: "text/vcard;charset=utf-8" }));
@@ -76,8 +72,6 @@ const items: Item[] = [
   { label: { en: "Visit Website", fr: "Site web" }, sub: { en: "vtmacoretrust.com", fr: "vtmacoretrust.com" }, icon: Globe, href: CONTACT.website, primary: true },
   { label: { en: "Book a Meeting", fr: "Prendre RDV" }, sub: { en: "", fr: "" }, icon: CalendarCheck, href: CONTACT.booking },
   { label: { en: "Office Location", fr: "Nos bureaux" }, sub: { en: "", fr: "" }, icon: MapPin, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}` },
-  { label: { en: "LinkedIn", fr: "LinkedIn" }, sub: { en: "", fr: "" }, icon: Linkedin, href: CONTACT.linkedin },
-  { label: { en: "Facebook", fr: "Facebook" }, sub: { en: "", fr: "" }, icon: Facebook, href: CONTACT.facebook },
   { label: { en: "Email Us", fr: "E-mail" }, sub: { en: "", fr: "" }, icon: Mail, href: `mailto:${CONTACT.email}` },
   { label: { en: "WhatsApp / Call", fr: "WhatsApp" }, sub: { en: "", fr: "" }, icon: MessageCircle, href: `https://wa.me/${CONTACT.phone.replace(/\D/g, "")}` },
   { label: { en: "Save Contact", fr: "Enregistrer le contact" }, sub: { en: "Download vCard (.vcf)", fr: "Télécharger la vCard (.vcf)" }, icon: UserPlus, onClick: downloadVCard },
@@ -128,7 +122,7 @@ function Index() {
             </div>
           </div>
           <div className="w-full rounded-2xl bg-card px-6 py-3.5 shadow-[var(--shadow-card)]">
-            <img src={logo.url} alt="VTMA CoreTrust Advisory Ltd logo" className="mx-auto h-10 w-auto" />
+            <img src={logoUrl} alt="VTMA CoreTrust Advisory Ltd logo" className="mx-auto h-10 w-auto" />
           </div>
           <h1 className="mt-4 text-lg font-semibold leading-tight tracking-tight">VTMA CoreTrust Advisory Ltd</h1>
           <p className="mt-1.5 flex flex-wrap justify-center text-[11px] leading-relaxed text-muted-foreground">{TXT.services[lang].map((x, i) => (

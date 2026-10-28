@@ -1,4 +1,4 @@
-# Vt Test Contact Hub
+# VTMA Landing Link In Bio
 
 Create a clean, ultra-professional, and modern mobile-first link-in-bio / intermediary landing page for "VTMA Coretrust" (vtmacoretrust.com), a high-end audit, compliance, and reporting advisory firm. 
 
@@ -55,4 +55,24 @@ git clone <this-repository-url>
 cd <repository-name>
 npm i
 npm run dev
+```
+
+## Deployment (GitHub Pages)
+
+This site is a static single page, built in SPA mode and prerendered to HTML at build time. It deploys to GitHub Pages via the [Deploy to GitHub Pages](.github/workflows/deploy.yml) workflow.
+
+**Setup (once):**
+
+1. Push this repository to GitHub.
+2. In the repo, go to **Settings → Pages** and set **Source** to **GitHub Actions**.
+
+After that, every push to `main` builds and publishes the site automatically.
+
+**URL:** the site is served from the repository subpath, so `vite.config.ts` sets `base: "/vtma-landing/"`. If you rename the repository or switch to a custom domain (`base: "/"` and a `CNAME` file), update the base accordingly.
+
+**Local preview of the production build:**
+
+```sh
+npm run build
+npx vite preview   # serves at http://localhost:4173/vtma-landing/
 ```
