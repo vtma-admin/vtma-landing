@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import {
   Globe,
   MapPin,
@@ -27,15 +28,15 @@ const CONTACT = {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "VTMA CoreTrust Advisory Ltd — Audit, Compliance & Reporting" },
+      { title: "VTMA CoreTrust Advisory Ltd — Audit, Forensics & Advisory" },
       {
         name: "description",
-        content: "Connect with VTMA CoreTrust Advisory Ltd: audit analytics, compliance and reporting systems advisory.",
+        content: "Connect with VTMA CoreTrust Advisory Ltd: audit & assurance, forensics, financial advisory and capacity building.",
       },
-      { property: "og:title", content: "VTMA CoreTrust Advisory Ltd — Audit, Compliance & Reporting" },
+      { property: "og:title", content: "VTMA CoreTrust Advisory Ltd — Audit, Forensics & Advisory" },
       {
         property: "og:description",
-        content: "Audit Analytics, Compliance & Reporting Systems. Website, contact and consultations in one place.",
+        content: "Audit & Assurance • Forensics • Financial Advisory • Capacity Building. Website, contact and consultations in one place.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -50,7 +51,7 @@ function downloadVCard() {
     "VERSION:3.0",
     "FN:VTMA CoreTrust Advisory Ltd",
     "ORG:VTMA CoreTrust Advisory Ltd",
-    "TITLE:Audit Analytics, Compliance & Reporting Systems",
+    "TITLE:Audit & Assurance • Forensics • Financial Advisory • Capacity Building",
     `TEL;TYPE=WORK,VOICE:${CONTACT.phone}`,
     `EMAIL;TYPE=WORK:${CONTACT.email}`,
     `URL:${CONTACT.website}`,
@@ -67,34 +68,74 @@ function downloadVCard() {
   setTimeout(() => URL.revokeObjectURL(url), 30000);
 }
 
-type Item = { label: string; sub: string; icon: typeof Globe; href?: string; onClick?: () => void; primary?: boolean };
+type Lang = "en" | "fr";
+type T = Record<Lang, string>;
+type Item = { label: T; sub: T; icon: typeof Globe; href?: string; onClick?: () => void; primary?: boolean };
 
 const items: Item[] = [
-  { label: "Visit Website", sub: "vtmacoretrust.com", icon: Globe, href: CONTACT.website, primary: true },
-  { label: "Book a Meeting", sub: "Schedule a meeting with our advisors", icon: CalendarCheck, href: CONTACT.booking },
-  { label: "Office Location", sub: "Open in Google Maps", icon: MapPin, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}` },
-  { label: "LinkedIn", sub: "Insights & firm updates", icon: Linkedin, href: CONTACT.linkedin },
-  { label: "Facebook", sub: "News & announcements", icon: Facebook, href: CONTACT.facebook },
-  { label: "Email Us", sub: CONTACT.email, icon: Mail, href: `mailto:${CONTACT.email}` },
-  { label: "WhatsApp / Call", sub: "Speak with our team", icon: MessageCircle, href: `https://wa.me/${CONTACT.phone.replace(/\D/g, "")}` },
-  { label: "Save Contact", sub: "Download vCard (.vcf)", icon: UserPlus, onClick: downloadVCard },
+  { label: { en: "Visit Website", fr: "Site web" }, sub: { en: "vtmacoretrust.com", fr: "vtmacoretrust.com" }, icon: Globe, href: CONTACT.website, primary: true },
+  { label: { en: "Book a Meeting", fr: "Prendre RDV" }, sub: { en: "", fr: "" }, icon: CalendarCheck, href: CONTACT.booking },
+  { label: { en: "Office Location", fr: "Nos bureaux" }, sub: { en: "", fr: "" }, icon: MapPin, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}` },
+  { label: { en: "LinkedIn", fr: "LinkedIn" }, sub: { en: "", fr: "" }, icon: Linkedin, href: CONTACT.linkedin },
+  { label: { en: "Facebook", fr: "Facebook" }, sub: { en: "", fr: "" }, icon: Facebook, href: CONTACT.facebook },
+  { label: { en: "Email Us", fr: "E-mail" }, sub: { en: "", fr: "" }, icon: Mail, href: `mailto:${CONTACT.email}` },
+  { label: { en: "WhatsApp / Call", fr: "WhatsApp / Appel" }, sub: { en: "", fr: "" }, icon: MessageCircle, href: `https://wa.me/${CONTACT.phone.replace(/\D/g, "")}` },
+  { label: { en: "Save Contact", fr: "Enregistrer le contact" }, sub: { en: "Download vCard (.vcf)", fr: "Télécharger la vCard (.vcf)" }, icon: UserPlus, onClick: downloadVCard },
 ];
 
+const TXT = {
+  services: {
+    en: ["Audit & Assurance", "Forensics", "Financial Advisory", "Capacity Building"],
+    fr: ["Audit & Assurance", "Juricomptabilité", "Conseil financier", "Renforcement des capacités"],
+  },
+  trusted: { en: "Trusted Advisory", fr: "Conseil de confiance" },
+  rights: { en: "All rights reserved.", fr: "Tous droits réservés." },
+  powered: { en: "Powered by VTMA Engineering Lab", fr: "Propulsé par VTMA Engineering Lab" },
+};
+
 function Index() {
+  const [lang, setLang] = useState<Lang>("en");
+  useEffect(() => {
+    const saved = localStorage.getItem("lang");
+    if (saved === "en" || saved === "fr") setLang(saved);
+    else if (navigator.language.toLowerCase().startsWith("fr")) setLang("fr");
+  }, []);
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+  const choose = (l: Lang) => {
+    setLang(l);
+    localStorage.setItem("lang", l);
+  };
   return (
     <div className="relative min-h-dvh overflow-hidden bg-background text-foreground">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[360px] bg-[radial-gradient(ellipse_at_top,var(--glow),transparent_70%)]" />
       <main className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col justify-between gap-4 px-4 py-5">
         <header className="flex flex-col items-center text-center">
+          <div className="mb-3 flex w-full justify-end">
+            <div role="group" aria-label="Language / Langue" className="inline-flex rounded-full border border-border bg-secondary p-0.5 text-[11px] font-semibold">
+              {(["en", "fr"] as const).map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  onClick={() => choose(l)}
+                  aria-pressed={lang === l}
+                  className={`rounded-full px-3 py-1 transition-colors ${lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  {l.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="w-full rounded-2xl bg-card px-6 py-3.5 shadow-[var(--shadow-card)]">
             <img src={logo.url} alt="VTMA CoreTrust Advisory Ltd logo" className="mx-auto h-10 w-auto" />
           </div>
           <h1 className="mt-4 text-lg font-semibold leading-tight tracking-tight">VTMA CoreTrust Advisory Ltd</h1>
-          <p className="mt-1 text-xs text-muted-foreground">Audit Analytics, Compliance &amp; Reporting Systems</p>
+          <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{TXT.services[lang].join(" • ")}</p>
           <div className="mt-3 flex items-center gap-2.5 text-gold">
             <span className="h-px w-6 bg-gold/50" />
             <Landmark className="h-3.5 w-3.5" strokeWidth={1.5} />
-            <span className="text-[9px] font-medium uppercase tracking-[0.3em]">Trusted Advisory</span>
+            <span className="text-[9px] font-medium uppercase tracking-[0.3em]">{TXT.trusted[lang]}</span>
             <span className="h-px w-6 bg-gold/50" />
           </div>
         </header>
@@ -116,25 +157,25 @@ function Index() {
                   <Icon className="h-4 w-4" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[13px] font-semibold leading-tight">{it.label}</span>
+                  <span className="block truncate text-[13px] font-semibold leading-tight">{it.label[lang]}</span>
                   {full && (
-                    <span className={`block truncate text-[11px] ${it.primary ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{it.sub}</span>
+                    <span className={`block truncate text-[11px] ${it.primary ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{it.sub[lang]}</span>
                   )}
                 </span>
                 {full && <ChevronRight className="h-4 w-4 shrink-0 opacity-50 transition-transform group-hover:translate-x-1" />}
               </>
             );
             return it.onClick ? (
-              <button key={it.label} type="button" onClick={it.onClick} className={cls}>{body}</button>
+              <button key={it.label[lang]} type="button" onClick={it.onClick} className={cls}>{body}</button>
             ) : (
-              <a key={it.label} href={it.href} target={it.href?.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className={cls}>{body}</a>
+              <a key={it.label[lang]} href={it.href} target={it.href?.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className={cls}>{body}</a>
             );
           })}
         </nav>
 
         <footer className="text-center text-[10px] text-muted-foreground">
-          <p>© {new Date().getFullYear()} VTMA CoreTrust Advisory Ltd. All rights reserved.</p>
-          <p className="mt-0.5 opacity-70">Powered by VTMA Engineering Lab</p>
+          <p>© {new Date().getFullYear()} VTMA CoreTrust Advisory Ltd. {TXT.rights[lang]}</p>
+          <p className="mt-0.5 opacity-70">{TXT.powered[lang]}</p>
         </footer>
       </main>
     </div>
