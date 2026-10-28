@@ -79,7 +79,7 @@ const items: Item[] = [
   { label: { en: "LinkedIn", fr: "LinkedIn" }, sub: { en: "", fr: "" }, icon: Linkedin, href: CONTACT.linkedin },
   { label: { en: "Facebook", fr: "Facebook" }, sub: { en: "", fr: "" }, icon: Facebook, href: CONTACT.facebook },
   { label: { en: "Email Us", fr: "E-mail" }, sub: { en: "", fr: "" }, icon: Mail, href: `mailto:${CONTACT.email}` },
-  { label: { en: "WhatsApp / Call", fr: "WhatsApp / Appel" }, sub: { en: "", fr: "" }, icon: MessageCircle, href: `https://wa.me/${CONTACT.phone.replace(/\D/g, "")}` },
+  { label: { en: "WhatsApp / Call", fr: "WhatsApp" }, sub: { en: "", fr: "" }, icon: MessageCircle, href: `https://wa.me/${CONTACT.phone.replace(/\D/g, "")}` },
   { label: { en: "Save Contact", fr: "Enregistrer le contact" }, sub: { en: "Download vCard (.vcf)", fr: "Télécharger la vCard (.vcf)" }, icon: UserPlus, onClick: downloadVCard },
 ];
 
@@ -131,7 +131,12 @@ function Index() {
             <img src={logo.url} alt="VTMA CoreTrust Advisory Ltd logo" className="mx-auto h-10 w-auto" />
           </div>
           <h1 className="mt-4 text-lg font-semibold leading-tight tracking-tight">VTMA CoreTrust Advisory Ltd</h1>
-          <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{TXT.services[lang].join(" • ")}</p>
+          <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{TXT.services[lang].map((x, i) => (
+              <span key={x} className="whitespace-nowrap">
+                {i > 0 && <span className="mx-1.5 text-gold/70">•</span>}
+                {x}
+              </span>
+            ))}</p>
           <div className="mt-3 flex items-center gap-2.5 text-gold">
             <span className="h-px w-6 bg-gold/50" />
             <Landmark className="h-3.5 w-3.5" strokeWidth={1.5} />
