@@ -71,7 +71,7 @@ type Item = { label: string; sub: string; icon: typeof Globe; href?: string; onC
 
 const items: Item[] = [
   { label: "Visit Website", sub: "vtmacoretrust.com", icon: Globe, href: CONTACT.website, primary: true },
-  { label: "Book Consultation", sub: "Schedule a meeting with our advisors", icon: CalendarCheck, href: CONTACT.booking },
+  { label: "Book a Meeting", sub: "Schedule a meeting with our advisors", icon: CalendarCheck, href: CONTACT.booking },
   { label: "Office Location", sub: "Open in Google Maps", icon: MapPin, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}` },
   { label: "LinkedIn", sub: "Insights & firm updates", icon: Linkedin, href: CONTACT.linkedin },
   { label: "Facebook", sub: "News & announcements", icon: Facebook, href: CONTACT.facebook },
