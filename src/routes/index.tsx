@@ -17,6 +17,8 @@ import logoUrl from "@/assets/vtma-logo.png";
 const CONTACT = {
   website: "https://vtmacoretrust.com",
   address: "77 Rue 1123 Hydrocarbures, Bonapriso, Douala, Cameroon",
+  // Google Business Profile share link (opens Google Maps directly).
+  maps: "https://maps.app.goo.gl/nsqrbbrvcTizH5eo9",
   email: "contact@vtmacoretrust.com",
   phone: "+237 6 40 90 12 52",
   booking: "https://calendar.app.google/K4r5SiGGDsdwf4pbA",
@@ -72,7 +74,7 @@ type Item = { label: T; sub: T; icon: typeof Globe; href?: string; onClick?: () 
 const items: Item[] = [
   { label: { en: "Visit Website", fr: "Site web" }, sub: { en: "vtmacoretrust.com", fr: "vtmacoretrust.com" }, icon: Globe, href: CONTACT.website, primary: true },
   { label: { en: "Book a Meeting", fr: "Prendre RDV" }, sub: { en: "", fr: "" }, icon: CalendarCheck, href: CONTACT.booking },
-  { label: { en: "Office Location", fr: "Nos bureaux" }, sub: { en: "", fr: "" }, icon: MapPin, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}` },
+  { label: { en: "Office Location", fr: "Localisation" }, sub: { en: "", fr: "" }, icon: MapPin, href: CONTACT.maps },
   { label: { en: "Email Us", fr: "E-mail" }, sub: { en: "", fr: "" }, icon: Mail, href: `mailto:${CONTACT.email}` },
   { label: { en: "WhatsApp / Call", fr: "WhatsApp" }, sub: { en: "", fr: "" }, icon: MessageCircle, href: `https://wa.me/${CONTACT.phone.replace(/\D/g, "")}` },
   { label: { en: "Save Contact", fr: "Enregistrer le contact" }, sub: { en: "Download vCard (.vcf)", fr: "Télécharger la vCard (.vcf)" }, icon: UserPlus, onClick: downloadVCard },

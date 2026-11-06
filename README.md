@@ -57,21 +57,22 @@ npm i
 npm run dev
 ```
 
-## Deployment (GitHub Pages)
+## Deployment (Cloudflare Pages)
 
-This site is a static single page, prerendered to HTML at build time. It deploys to GitHub Pages via the [Deploy to GitHub Pages](.github/workflows/deploy.yml) workflow.
+This site is a static single page, prerendered to HTML at build time. It is hosted on **Cloudflare Pages**, which builds directly from this GitHub repository: every push to `main` deploys automatically.
 
-**Setup (once):**
+**Build settings (configured in the Cloudflare dashboard):**
 
-1. Push this repository to GitHub.
-2. In the repo, go to **Settings → Pages** and set **Source** to **GitHub Actions**.
-3. Custom domain: in **Settings → Pages**, enter `landing.vtmacoretrust.com` under **Custom domain** and save. At your DNS provider, add a `CNAME` record:
-   - `landing` → `vtma-admin.github.io`
-   - (a plain `CNAME` is enough for subdomains; no `A` records needed)
+| Setting | Value |
+|---|---|
+| Framework preset | None |
+| Build command | `npm install && npm run build` |
+| Output directory | `.output/public` |
+| Environment variable | `NODE_VERSION=22` |
 
-The `public/CNAME` file ships with the deploy so the setting survives rebuilds. Wait for the DNS check to go green, and enable **Enforce HTTPS** once the certificate is issued.
+**Custom domain:** `landing.vtmacoretrust.com` is attached to the Pages project under **Workers & Pages → vtma-landing → Custom domains**. Cloudflare handles the DNS record and the edge certificate automatically.
 
-**URL:** the site is served from the root of a custom subdomain, so `vite.config.ts` uses `base: "/"`. If you ever switch back to the default `https://vtma-admin.github.io/vtma-landing/` URL, change the base to `"/vtma-landing/"` instead.
+**URL:** the site is served from the root of the subdomain, so `vite.config.ts` uses `base: "/"`. If you ever serve it from a subpath instead, change the base accordingly.
 
 **Local preview of the production build:**
 
